@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+/*
+  Design tokens — "Aurora" theme.
+
+  A richer, more deliberate palette than a default indigo-on-white
+  template: a violet→pink brand gradient used sparingly (logo mark, primary
+  buttons, headline accents) against a near-white, faintly violet-tinted
+  surface, with warm amber/rose/emerald status colors that stay legible at
+  small sizes. Monospace is kept as the signature treatment for
+  timestamps/ids/activity log — ties the "engineering tool" identity
+  together without relying on a second display typeface.
+*/
+@theme {
+  --color-bg: #faf9ff;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-ink: #0f1222;
+  --color-ink-muted: #64647d;
+  --color-ink-faint: #9d9db3;
+  --color-border: #e8e6f5;
+  --color-border-strong: #d5d1ec;
+
+  --color-primary: #6d5bf7;
+  --color-primary-2: #a855f7;
+  --color-primary-hover: #5a47e8;
+  --color-primary-soft: #efebff;
+
+  --color-accent: #ec4899;
+  --color-accent-soft: #fce8f3;
+
+  --color-warn: #f59e0b;
+  --color-warn-soft: #fef3da;
+
+  --color-success: #10b981;
+  --color-success-soft: #ddf7ee;
+
+  --color-danger: #ef4444;
+  --color-danger-soft: #fde8e8;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono:
+    ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+
+  --shadow-glow: 0 12px 32px -12px rgb(109 91 247 / 0.35);
+  --shadow-glow-lg: 0 24px 60px -16px rgb(109 91 247 / 0.4);
+  --shadow-card: 0 1px 2px rgb(15 18 34 / 0.04), 0 8px 24px -12px rgb(109 91 247 / 0.18);
+  --shadow-card-hover: 0 4px 12px rgb(15 18 34 / 0.06), 0 16px 36px -12px rgb(109 91 247 / 0.28);
+
+  --animate-shimmer: shimmer 1.8s ease-in-out infinite;
+  --animate-blob: blob 16s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -50px) scale(1.1); }
+  66% { transform: translate(-30px, 30px) scale(0.92); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pop {
+  0% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+::selection {
+  background: var(--color-primary-soft);
+  color: var(--color-ink);
+}
+
+.gradient-brand {
+  background-image: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-2) 60%, var(--color-accent) 100%);
+}
+
+.gradient-primary {
+  background-image: linear-gradient(135deg, var(--color-primary), var(--color-primary-2));
+}
+
+.text-gradient {
+  background-image: linear-gradient(135deg, var(--color-primary), var(--color-primary-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass {
+  background: rgb(255 255 255 / 0.72);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+
+.skeleton-shimmer {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-border) 30%,
+    #f3f1ff 50%,
+    var(--color-border) 70%
+  );
+  background-size: 250% 100%;
+}
+
+/* custom thin scrollbar for board columns / modals */
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
+.scroll-thin::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 999px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

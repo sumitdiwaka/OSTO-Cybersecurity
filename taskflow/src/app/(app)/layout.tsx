@@ -4,16 +4,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { SessionExpiredModal } from "@/components/auth/SessionExpiredModal";
+import { Sidebar } from "@/components/layout/Sidebar";
 import { Skeleton } from "@/components/ui/States";
 
-/**
- * Middleware already blocks unauthenticated requests from reaching this
- * tree (see src/middleware.ts) — that's what makes the protection real,
- * since it runs before any page code executes. This client-side check is
- * a second, narrower layer: it covers the case where a session expires
- * *while the user is already sitting on a protected page*, which
- * middleware (only evaluated per-navigation) can't catch on its own.
- */
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { isLoading, isAuthenticated, sessionExpired } = useAuth();
   const router = useRouter();
@@ -39,6 +32,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
+      <Sidebar />
       {children}
       <SessionExpiredModal />
     </>

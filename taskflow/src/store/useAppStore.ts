@@ -1,18 +1,15 @@
 import { create } from "zustand";
 
-/**
- * Zustand holds UI state only: which workspace is active, whether panels
- * are open, which task is being edited. Server data (user, boards, tasks,
- * activity) lives in React Query's cache instead — see hooks/. Splitting
- * it this way avoids the classic mistake of duplicating server state into
- * a client store and then fighting to keep the two in sync.
- */
 interface AppState {
   currentWorkspaceId: string | null;
   setCurrentWorkspaceId: (id: string | null) => void;
 
   isActivityPanelOpen: boolean;
   toggleActivityPanel: () => void;
+
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
+  closeSidebar: () => void;
 
   editingTaskId: string | null;
   setEditingTaskId: (id: string | null) => void;
@@ -28,8 +25,12 @@ export const useAppStore = create<AppState>((set) => ({
   currentWorkspaceId: null,
   setCurrentWorkspaceId: (id) => set({ currentWorkspaceId: id }),
 
-  isActivityPanelOpen: true,
+  isActivityPanelOpen: false,
   toggleActivityPanel: () => set((s) => ({ isActivityPanelOpen: !s.isActivityPanelOpen })),
+
+  isSidebarOpen: false,
+  toggleSidebar: () => set((s) => ({ isSidebarOpen: !s.isSidebarOpen })),
+  closeSidebar: () => set({ isSidebarOpen: false }),
 
   editingTaskId: null,
   setEditingTaskId: (id) => set({ editingTaskId: id }),
